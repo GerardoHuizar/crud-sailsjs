@@ -13,7 +13,7 @@ a [Sails v1](https://sailsjs.com) application
 + [Professional / enterprise options](https://sailsjs.com/enterprise)
 
 
-### Version info
+# Version info
 
 This app was originally generated on Thu May 21 2020 15:44:07 GMT-0500 (Central Daylight Time) using Sails v1.2.4.
 
@@ -30,4 +30,3 @@ Note:  Generators are usually run using the globally-installed `sails` CLI (comm
 =======
 # crud-sailsJs
 crud simple con sails framework
->>>>>>> 8629b1676b7ef1a72568a879ce187f2d2ac2baef
