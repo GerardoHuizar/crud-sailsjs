@@ -1,0 +1,89 @@
+<div id="welcome">
+  <div class="container">
+    <h1>Welcome!</h1>
+    <div class="container">
+      <div>
+        HI! 
+        <table v-show="isAdmin === true" class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">N°</th>
+              <th scope="col">Full Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in list">
+              <th scope="row">{{item.id}}</th>
+              <td>{{item.fullName}}</td>
+              <td>{{item.emailAddress}}</td>
+              <td>
+                <button 
+                  type="button" 
+                  class="btn btn-danger"
+                  @click="deleteUserHandler(item.id)"
+                >
+                Delete
+              </button>
+              <button 
+                class="btn btn-outline-info ml-2" 
+                @click="editUserModal(item)"
+              >
+                Edit user
+              </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p v-show="!isAdmin">
+          No tienes permisos para ver el listado de usuarios.
+        </p>
+      </div>
+    </div>
+    <hr/>
+    <p>This is a page that only logged-in people can visit. Don't you feel special? Try clicking on a button below to do some things you can't do when you're logged out.</p>
+    <div class="buttons">
+      <a class="btn btn-info" href="/account/profile">Update my email</a>
+      <button class="btn btn-outline-info ml-2" @click="clickOpenExampleModalButton()">Open a modal</button>
+    </div>
+  </div>
+
+  <router-view></router-view>
+
+  <!--  ╔═╗═╗ ╦╔═╗╔╦╗╔═╗╦  ╔═╗  ┌┬┐┌─┐┌┬┐┌─┐┬
+        ║╣ ╔╩╦╝╠═╣║║║╠═╝║  ║╣   ││││ │ ││├─┤│
+        ╚═╝╩ ╚═╩ ╩╩ ╩╩  ╩═╝╚═╝  ┴ ┴└─┘─┴┘┴ ┴┴─┘  -->
+  <modal class="example-modal" v-if="modal==='example'" @close="closeExampleModal()" v-cloak>
+    <div class="modal-header">
+      <h2 class="modal-title">Edit record of {{editUser ? editUser.fullName : '' }}</h2>
+      <hr/>
+      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="js-timestamp-examples">
+        <ajax-form action="updateProfile" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+          <div class="form-group">
+            <label for="full-name">Full name</label>
+            <input class="form-control" id="full-name" type="text"  class="[formErrors.fullName ? 'is-invalid' : '']" v-model.trim="editUser.fullName" placeholder="Sturgis P. Sturgeon" autocomplete="name" focus-first>
+            <div class="invalid-feedback" v-if="formErrors.fullName">Please enter your full name.</div>
+          </div>
+          <div class="form-group">
+            <label for="email-address">Email address</label>
+            <input class="form-control" id="email-address" type="email"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="editUser.emailAddress" placeholder="sturgeon@example.com" autocomplete="email">
+            <input class="form-control" id="id" type="hidden" v-model.trim="editUser.id" placeholder="sturgeon@example.com" autocomplete="id">
+            <div class="invalid-feedback" v-show="formErrors.emailAddress">Please enter different email.</div>
+          </div>
+          <div class="form-group">
+            <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block">Accept</ajax-button>
+          </div>
+        </ajax-form>
+      </div>
+    </div>
+    <div class="modal-footer flex-row-reverse justify-content-between">
+      <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+      <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+    </div>
+  </modal>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
