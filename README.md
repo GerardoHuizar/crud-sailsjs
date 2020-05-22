@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # gerardo-huizar-crud
 
 a [Sails v1](https://sailsjs.com) application
